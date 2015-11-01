@@ -1,0 +1,3 @@
+def generate():
+	#TODO
+	pass
