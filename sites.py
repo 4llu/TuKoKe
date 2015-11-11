@@ -1,4 +1,6 @@
 from random import gauss
+from post import Post
+
 class Site:
 	def __init__(self, topic, mean, deviation):
 		self.topic = topic
@@ -7,6 +9,6 @@ class Site:
 		self.posts = []
 
 	def createPosts(self):
-		num = gauss(self.mean, self.deviation)
-		for ii in num:
+		num = int(gauss(self.mean, self.deviation))
+		for ii in range(num):
 			self.posts.append(Post(self.topic, 0))
