@@ -10,6 +10,7 @@ class Site:
 		self.posts = []
 
 	def createPosts(self):
+		self.posts = []
 		num = int(gauss(self.mean, self.deviation))
 		for ii in range(num):
 			self.posts.append(Post(self.topic, 0, 0))

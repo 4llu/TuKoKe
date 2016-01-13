@@ -2,9 +2,9 @@
 import generate
 import json
 
-PEOPLE_SETS = 1 # HARDCODE
-REPETITIONS = 2 # HARDCODE
-TIMESTEPS = 10 # HARDCODE
+PEOPLE_SETS = 4 # HARDCODE
+REPETITIONS = 4 # HARDCODE
+TIMESTEPS = 30 # HARDCODE
 
 # Save results of parameter set here
 par_results = []
@@ -53,8 +53,7 @@ for popSet in range(PEOPLE_SETS):
 			# DEBUG
 			print(people[0].received)
 			print(people[0].seen)
-			print(people[0].created)
-			print(people[0].shared)
+			print(people[0].interests)
 
 		# Save results
 		received = []
@@ -62,17 +61,20 @@ for popSet in range(PEOPLE_SETS):
 		created = []
 		shared = []
 
+		# Repetition result save
 		for person in people:
 			rep_results.append(person.received)
 			rep_results.append(person.seen)
 			rep_results.append(person.created)
 			rep_results.append(person.seen)
-		# Repetition
 		pop_results.append(rep_results)
+
 		# Reset people
 		for person in people:
 			person.reset()
-	#People set
+		print("|||||||||||||||||||||||||||||||||||||||||||||||||||||||") # DEBUG
+
+	#People set result save
 	par_results.append(pop_results)
 #Save results with JSON
 with open("results.txt", "w") as f:

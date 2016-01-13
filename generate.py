@@ -17,11 +17,11 @@ def sites():
 	for ii, topic in enumerate(TOPICS):
 		# Split topic
 		if ii == 0:
-			sites.append(Site(topic, MEAN / 2, DEVIATION / 2, 1))
-			sites.append(Site(topic, MEAN / 2, DEVIATION / 2, 2))
+			sites.append(Site(topic, S_MEAN / 2, S_DEVIATION / 2, 1))
+			sites.append(Site(topic, S_MEAN / 2, S_DEVIATION / 2, 2))
 		# Rest
 		else:
-			sites.append(Site(topic, MEAN, DEVIATION, 0))
+			sites.append(Site(topic, S_MEAN, S_DEVIATION, 0))
 
 	return  sites
 

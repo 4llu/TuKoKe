@@ -14,10 +14,10 @@ DOI_PREF = 0.4
 ## People ##
 
 # Amount of people in the system
-PEOPLE = 10
+PEOPLE = 100
 
 # Probabilities of sharing and creating posts
-PSHARE = 0.2
+PSHARE = 0.06
 PCREATE = 0.1
 
 # Interests configuration (part of people with interest for topic)
@@ -31,9 +31,8 @@ F_DEVIATION = 4
 ## Sites ##
 
 # Site post creation variables
-MEAN = 20
-DEVIATION = 3
-
+S_MEAN = 20
+S_DEVIATION = 3
 
 ## Filter ##
 FILTERMAX = 50

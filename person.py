@@ -25,7 +25,7 @@ class Person:
 		self.created = {}
 		self.shared = {}
 		for ii in self.interests:
-			# type as [site, shared, created]
+			# type as [site, created, shared]
 			self.received[ii] = [0, 0, 0]
 			self.seen[ii] = [0, 0, 0]
 			self.created[ii] = [0, 0, 0]
@@ -38,6 +38,9 @@ class Person:
 			bonus = 0.2
 		elif site.preference != 0:
 			bonus = -0.2
+		# Prevent negative interest
+		if self.interests[site.topic] + bonus:
+			bonus = 0
 		num = int(len(site.posts) * (self.interests[site.topic] + bonus))
 		for post in site.posts[:num]:
 			self.buffer.append(post)
