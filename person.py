@@ -2,6 +2,7 @@ from random import random as rr
 from random import randint as ri
 from post import Post
 from constants import TOPICS
+from constants import FILTER_ON
 
 class Person:
 	def __init__(self, pShare, pCreate, DoI):
@@ -35,7 +36,7 @@ class Person:
 		bonus = 0
 		if site.preference == self.preference:
 			bonus = 0.2
-		elif site.prefence != 0:
+		elif site.preference != 0:
 			bonus = -0.2
 		num = int(len(site.posts) * (self.interests[site.topic] + bonus))
 		for post in site.posts[:num]:
@@ -59,7 +60,7 @@ class Person:
 				# Create new post for sharing
 				pref = 0
 				# Add preference if necessary
-				if topic == TOPICS[0]:
+				if post.topic == TOPICS[0]:
 					pref = self.preference
 				self.outbox.append(Post(post.topic, 2, pref))
 
@@ -77,8 +78,23 @@ class Person:
 							pref = self.preference
 						self.outbox.append(Post(topic, 1, pref))
 
-	def send(self):
+	def send(self, people):
 		for friend in self.friends:
-			for post in outbox:
-				friend.buffer.append(outbox)
+			for post in self.outbox:
+				people[friend].buffer.append(post)
 		self.outbox = []
+
+	def reset(self):
+		self.buffer = []
+		self.outbox = []
+		# To save results
+		self.received = {}
+		self.seen = {}
+		self.created = {}
+		self.shared = {}
+		for ii in self.interests:
+			# type as [site, shared, created]
+			self.received[ii] = [0, 0, 0]
+			self.seen[ii] = [0, 0, 0]
+			self.created[ii] = [0, 0, 0]
+			self.shared[ii] = [0, 0, 0]

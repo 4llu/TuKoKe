@@ -2,6 +2,7 @@ from random import choice as rc
 from random import randint as ri
 from random import random as rr
 from random import gauss
+import math
 
 from constants import *
 from filter import Filter
@@ -34,13 +35,13 @@ def people():
 		people.append(Person(PSHARE, PCREATE, DOI))
 
 	# Create quotas
-	quotas = 0
-	for topic in TOPICS:
-		quotas.append(math.ceil(PEOPLE * I_CONF))
+	quotas = []
+	for ii, topic in enumerate(TOPICS):
+		quotas.append(math.ceil(PEOPLE * I_CONF[ii]))
 
 	# Distribute interests
 	for ii, quota in enumerate(quotas):
-		for nn in quota:
+		for nn in range(quota):
 			# Interested or very interested
 			d = DOI[0] if rr() < DOI_PREF else DOI[1]
 
@@ -69,7 +70,7 @@ def people():
 			# Split topic
 			if (ii == 0):
 				# Preferences go half and half
-				people[person].preference = 1 if n % 2 == 0 else 2
+				people[person].preference = 1 if nn % 2 == 0 else 2
 
 	return people
 
@@ -90,7 +91,7 @@ def friends(people):
 			if len(other_person.friends) < 4 or (len(other_person.friends) < 8 and rr() < 0.7) or rr() < 0.3:
 				prob = 0.3
 				# Mutual interests
-				for jj, topic in enumerate(topics):
+				for jj, topic in enumerate(TOPICS):
 					# Split topic
 					if jj == 0:
 						# No preference

@@ -11,9 +11,6 @@ DOI = [0.7, 0.4, 0]
 # (chance to be very interested)
 DOI_PREF = 0.4
 
-# Constant across all param sets.
-TIMESTEPS = 100
-
 ## People ##
 
 # Amount of people in the system
@@ -29,7 +26,8 @@ I_CONF = [0.5, 0.4, 0.4, 0.4]
 
 # Amount of friend requests sent
 F_MEAN = 25
-F_DEVIATON = 4
+F_DEVIATION = 4
+
 ## Sites ##
 
 # Site post creation variables
