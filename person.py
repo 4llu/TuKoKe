@@ -3,13 +3,15 @@ from random import randint as ri
 from post import Post
 from constants import TOPICS
 from parameters import FILTER_ON
+from parameters import BONUS_ON
 
 class Person:
-	def __init__(self, pShare, pCreate, DoI):
+	def __init__(self, pShare, pCreate, DoI, param_num):
 		# From parameters
 		self.pShare = pShare
 		self.pCreate = pCreate
 		self.DoI = DoI
+		self.param_num = param_num
 		# Add/fill/change later
 		self.interests = {}
 		for topic in TOPICS:
@@ -42,13 +44,14 @@ class Person:
 	def getPosts(self, site):
 		# Preference bonus
 		bonus = 0
-		if site.preference == self.preference:
-			bonus = 0.2
-		elif site.preference != 0:
-			bonus = -0.2
-		# Prevent negative interest
-		if self.interests[site.topic] + bonus < 0:
-			bonus = 0
+		if BONUS_ON[self.param_num]:
+			if site.preference == self.preference:
+				bonus = 0.2
+			elif site.preference != 0:
+				bonus = -0.2
+			# Prevent negative interest
+			if self.interests[site.topic] + bonus < 0:
+				bonus = 0
 		num = int(len(site.posts) * (self.interests[site.topic] + bonus))
 		for post in site.posts[:num]:
 			self.buffer.append(post)
@@ -64,7 +67,7 @@ class Person:
 			else:
 				self.received[post.topic][post.type] += 1
 		# Filter
-		if FILTER_ON:
+		if FILTER_ON[self.param_num]:
 			self.buffer = filter.filter(self.buffer, self.interests)
 		# Save seen
 		for post in self.buffer:

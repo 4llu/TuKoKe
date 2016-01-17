@@ -39,8 +39,15 @@ main {
     width: 75%;
 }
 
+.row {
+    margin: 1rem;
+}
+
 .separator {
     width: 90%;
     margin: 1rem auto;
     border-bottom: 1px solid #686F79;
+}
+canvas {
+    width: 100%;
 }

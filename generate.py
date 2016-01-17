@@ -26,14 +26,14 @@ def sites():
 
 	return  sites
 
-def filter():
-	return Filter(FILTERMAX)
+def filter(param_num):
+	return Filter(FILTERMAX[param_num])
 
-def people():
+def people(param_num):
 	people = []
 	# Create people
 	for ii in range(PEOPLE):
-		new_person = Person(PSHARE, PCREATE, DOI)
+		new_person = Person(PSHARE[param_num], PCREATE[param_num], DOI, param_num)
 		new_person.reset() # Init
 		people.append(new_person)
 
@@ -77,10 +77,10 @@ def people():
 
 	return people
 
-def friends(people):
+def friends(people, param_num):
 	for ii, person in enumerate(people):
 		# Send friend requests
-		for nn in range(int(gauss(F_MEAN, F_DEVIATION))):
+		for nn in range(int(gauss(F_MEAN[param_num], F_DEVIATION[param_num]))):
 			# Pick a person
 			id = ri(0, PEOPLE - 1)
 			# Skip self

@@ -10,13 +10,17 @@ PEOPLE_SETS = 3
 REPETITIONS = 4
 TIMESTEPS = 30
 
+# Parameter set number
+param_num = int(sys.argv[1])
+
 # Save everything here
 parameter_results = []
 
 # Newsfeed
 sites  = generate.sites()
 # Filter
-filter = generate.filter()
+filter = generate.filter(param_num)
+
 
 ##### Main loop #####
 
@@ -25,9 +29,9 @@ for popSet in range(PEOPLE_SETS):
 	# Save results of population set here
 	population_results = []
 	# Create people and distribute interests
-	people = generate.people()
+	people = generate.people(param_num)
 	# Create friend network
-	generate.friends(people)
+	generate.friends(people, param_num)
 	### Repetitions (because of stochasticity) ###
 	for rep in range(REPETITIONS):
 		# Save results of repetition here
@@ -80,8 +84,8 @@ for popSet in range(PEOPLE_SETS):
 	#People set result save
 	parameter_results.append(population_results)
 #Save results with JSON
-with open("Results/results" + sys.argv[1] + ".json", "w") as f:
+with open("Results/results" + str(param_num) + ".json", "w") as f:
 	f.write(json.dumps(parameter_results))
-with open("Results/params" + sys.argv[1] + ".json", "w") as f:
-	params = [FILTERMAX, FILTER_ON, F_MEAN, F_DEVIATION, PSHARE, PCREATE]
+with open("Results/params" + str(param_num) + ".json", "w") as f:
+	params = [FILTER_ON[param_num], FILTERMAX[param_num], BONUS_ON[param_num], F_MEAN[param_num], F_DEVIATION[param_num], PSHARE[param_num], PCREATE[param_num]]
 	f.write(json.dumps(params))
