@@ -13,4 +13,4 @@ class Site:
 		self.posts = []
 		num = int(gauss(self.mean, self.deviation))
 		for ii in range(num):
-			self.posts.append(Post(self.topic, 0, 0))
+			self.posts.append(Post(self.topic, 0, self.preference))

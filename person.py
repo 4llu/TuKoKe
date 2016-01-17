@@ -2,7 +2,7 @@ from random import random as rr
 from random import randint as ri
 from post import Post
 from constants import TOPICS
-from constants import FILTER_ON
+from parameters import FILTER_ON
 
 class Person:
 	def __init__(self, pShare, pCreate, DoI):
@@ -16,7 +16,8 @@ class Person:
 			self.interests[topic] = 0
 		self.friends = []
 		self.preference = 0 # 0: topic not of interest, 1: one side, 2: the other side
-		# Init otherwise
+
+	def reset(self):
 		self.buffer = []
 		self.outbox = []
 		# To save results
@@ -26,8 +27,15 @@ class Person:
 		self.shared = {}
 		for ii in self.interests:
 			# type as [site, created, shared]
-			self.received[ii] = [0, 0, 0]
-			self.seen[ii] = [0, 0, 0]
+			if ii == "A":
+				# [same pref, different pref]
+				self.received[ii] = [[0, 0], [0, 0], [0, 0]]
+			else:
+				self.received[ii] = [0, 0, 0]
+			if ii == "A":
+				self.seen[ii] = [[0, 0], [0, 0], [0, 0]]
+			else:
+				self.seen[ii] = [0, 0, 0]
 			self.created[ii] = [0, 0, 0]
 			self.shared[ii] = [0, 0, 0]
 
@@ -39,7 +47,7 @@ class Person:
 		elif site.preference != 0:
 			bonus = -0.2
 		# Prevent negative interest
-		if self.interests[site.topic] + bonus:
+		if self.interests[site.topic] + bonus < 0:
 			bonus = 0
 		num = int(len(site.posts) * (self.interests[site.topic] + bonus))
 		for post in site.posts[:num]:
@@ -48,13 +56,25 @@ class Person:
 	def seePosts(self, filter):
 		# Save received
 		for post in self.buffer:
-			self.received[post.topic][post.type] += 1
+			if post.topic == "A":
+				if self.preference == post.preference:
+					self.received[post.topic][post.type][0] += 1
+				else:
+					self.received[post.topic][post.type][1] += 1
+			else:
+				self.received[post.topic][post.type] += 1
 		# Filter
 		if FILTER_ON:
 			self.buffer = filter.filter(self.buffer, self.interests)
 		# Save seen
 		for post in self.buffer:
-			self.seen[post.topic][post.type] += 1
+			if post.topic == "A":
+				if self.preference == post.preference:
+					self.seen[post.topic][post.type][0] += 1
+				else:
+					self.seen[post.topic][post.type][1] += 1
+			else:
+				self.seen[post.topic][post.type] += 1
 
 	def share(self):
 		for post in self.buffer:
@@ -86,18 +106,3 @@ class Person:
 			for post in self.outbox:
 				people[friend].buffer.append(post)
 		self.outbox = []
-
-	def reset(self):
-		self.buffer = []
-		self.outbox = []
-		# To save results
-		self.received = {}
-		self.seen = {}
-		self.created = {}
-		self.shared = {}
-		for ii in self.interests:
-			# type as [site, shared, created]
-			self.received[ii] = [0, 0, 0]
-			self.seen[ii] = [0, 0, 0]
-			self.created[ii] = [0, 0, 0]
-			self.shared[ii] = [0, 0, 0]

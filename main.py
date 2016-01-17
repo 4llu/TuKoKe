@@ -1,13 +1,17 @@
-# Constants
 import generate
 import json
+import sys
+from parameters import *
 
-PEOPLE_SETS = 4 # HARDCODE
-REPETITIONS = 4 # HARDCODE
-TIMESTEPS = 30 # HARDCODE
+# PEOPLE_SETS = 1 # Debug
+# REPETITIONS = 1 # Debug
+# TIMESTEPS = 10 # Debug
+PEOPLE_SETS = 3
+REPETITIONS = 4
+TIMESTEPS = 30
 
-# Save results of parameter set here
-par_results = []
+# Save everything here
+parameter_results = []
 
 # Newsfeed
 sites  = generate.sites()
@@ -19,7 +23,7 @@ filter = generate.filter()
 ### Different friend sets with same parameters ###
 for popSet in range(PEOPLE_SETS):
 	# Save results of population set here
-	pop_results = []
+	population_results = []
 	# Create people and distribute interests
 	people = generate.people()
 	# Create friend network
@@ -30,7 +34,9 @@ for popSet in range(PEOPLE_SETS):
 		rep_results = []
 		#---- Single run ----#
 		for step in range(TIMESTEPS):
-			print(step, "----------------------------------")
+
+			print(step) # Debug
+
 			# Create posts
 			for site in sites:
 				site.createPosts()
@@ -51,23 +57,20 @@ for popSet in range(PEOPLE_SETS):
 				person.buffer = []
 
 			# DEBUG
-			print(people[0].received)
-			print(people[0].seen)
-			print(people[0].interests)
-
-		# Save results
-		received = []
-		seen = []
-		created = []
-		shared = []
+			# print(people[0].received)
+			# print(people[0].seen)
+			# print(people[0].interests)
 
 		# Repetition result save
 		for person in people:
-			rep_results.append(person.received)
-			rep_results.append(person.seen)
-			rep_results.append(person.created)
-			rep_results.append(person.seen)
-		pop_results.append(rep_results)
+			person_results = {};
+			person_results["received"] = person.received
+			person_results["seen"] = person.seen
+			person_results["created"] = person.created
+			person_results["interests"] = person.interests
+			person_results["preference"] = person.preference
+			rep_results.append(person_results)
+		population_results.append(rep_results)
 
 		# Reset people
 		for person in people:
@@ -75,7 +78,10 @@ for popSet in range(PEOPLE_SETS):
 		print("|||||||||||||||||||||||||||||||||||||||||||||||||||||||") # DEBUG
 
 	#People set result save
-	par_results.append(pop_results)
+	parameter_results.append(population_results)
 #Save results with JSON
-with open("results.txt", "w") as f:
-	f.write(json.dumps(par_results))
+with open("Results/results" + sys.argv[1] + ".json", "w") as f:
+	f.write(json.dumps(parameter_results))
+with open("Results/params" + sys.argv[1] + ".json", "w") as f:
+	params = [FILTERMAX, FILTER_ON, F_MEAN, F_DEVIATION, PSHARE, PCREATE]
+	f.write(json.dumps(params))

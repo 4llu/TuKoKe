@@ -5,6 +5,7 @@ from random import gauss
 import math
 
 from constants import *
+from parameters import *
 from filter import Filter
 from person import Person
 from filter import Filter
@@ -32,7 +33,9 @@ def people():
 	people = []
 	# Create people
 	for ii in range(PEOPLE):
-		people.append(Person(PSHARE, PCREATE, DOI))
+		new_person = Person(PSHARE, PCREATE, DOI)
+		new_person.reset() # Init
+		people.append(new_person)
 
 	# Create quotas
 	quotas = []
