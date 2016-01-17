@@ -26,3 +26,8 @@ I_CONF = [0.5, 0.4, 0.4, 0.4]
 # Site post creation variables
 S_MEAN = 20
 S_DEVIATION = 3
+
+## Filter ##
+
+# Should this be %?
+FILTERMAX = 50

@@ -1,4 +1,5 @@
 from random import random as rr
+from constants import FILTERMAX
 
 class Filter:
 		def __init__(self, show):

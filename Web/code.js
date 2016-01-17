@@ -16,10 +16,10 @@ $(document).ready(function(){
 function main(parameters, results) {
     // ---- CHART 1 ----
     // Data
-    var seen_own_filter = seenOwn(results[0], 0.7);
-    var seen_own_filter_no = seenOwn(results[1], 0.7);
-    var seen_other_filter = seenOther(results[0], 0.7);
-    var seen_other_filter_no = seenOther(results[1], 0.7);
+    var s_own = seenOwn(results[0], 0.7);
+    var s_own_nf = seenOwn(results[1], 0.7);
+    var s_other = seenOther(results[0], 0.7);
+    var s_other_nf = seenOther(results[1], 0.7);
 
     // Chart creation
     var ctx1 = $("#chart1").get(0).getContext("2d");
@@ -33,30 +33,30 @@ function main(parameters, results) {
                 label: "With filter",
                 fillColor: "#3498db",
                 highlightFill: "#85C4ED",
-                data: [seen_own_filter_no, seen_own_filter]
+                data: [s_own_nf, s_own]
             },
             {
                 label: "Without filter",
                 fillColor: "#2ecc71",
                 highlightFill: "#51D88C",
-                data: [seen_other_filter_no, seen_other_filter]
+                data: [s_other_nf, s_other]
             }
         ]
     }
-    var chart1 = new Chart(ctx1).Bar(data1, {});
+    var chart1 = new Chart(ctx1).Bar(data1, barOptions);
 
     // Info
     $("#info1").append("<p>Parameters 1: " + parameters[0].join(", ") + "</p>");
     $("#info1").append("<p>Parameters 2: " + parameters[1].join(", ") + "</p>");
-    $("#info1").append("<p>Difference with filter: " + ((seen_own_filter - seen_other_filter) / seen_other_filter * 100).toFixed(2) + "%</p>");
-    $("#info1").append("<p>Difference with no filter: " + ((seen_own_filter_no - seen_other_filter_no) / seen_other_filter_no * 100).toFixed(2) + "%</p>");
+    $("#info1").append("<p>Difference with filter: " + ((s_own - s_other) / s_other * 100).toFixed(2) + "%</p>");
+    $("#info1").append("<p>Difference with no filter: " + ((s_own_nf - s_other_nf) / s_other_nf * 100).toFixed(2) + "%</p>");
 
     // ---- CHART 2 ----
     // Data
-    var seen_own_bonus_no_filter_no = seenOwn(results[2], 0.7);
-    var seen_other_bonus_no_filter_no = seenOther(results[2], 0.7);
-    var seen_own_bonus_no = seenOwn(results[3], 0.7);
-    var seen_other_bonus_no = seenOther(results[3], 0.7);
+    var s_own_nb_nf = seenOwn(results[2], 0.7);
+    var s_other_nb_nf = seenOther(results[2], 0.7);
+    var s_own_nb = seenOwn(results[3], 0.7);
+    var s_other_nb= seenOther(results[3], 0.7);
 
     // Chart creation
     var ctx2 = $("#chart2").get(0).getContext("2d");
@@ -70,23 +70,25 @@ function main(parameters, results) {
                 label: "With filter",
                 fillColor: "#9b59b6",
                 highlightFill: "#DDB9EB",
-                data: [seen_own_bonus_no, seen_own_bonus_no_filter_no]
+                data: [s_own_nb, s_own_nb_nf]
             },
             {
                 label: "Without filter",
                 fillColor: "#e67e22",
                 highlightFill: "#FFB878",
-                data: [seen_other_bonus_no, seen_other_bonus_no_filter_no]
+                data: [s_other_nb, s_other_nb_nf]
             }
         ]
     }
-    var chart2 = new Chart(ctx2).Bar(data2, {});
+    var chart2 = new Chart(ctx2).Bar(data2, barOptions);
 
     // Info
+    var difference_nb = ((s_own_nb - s_other_nb) / s_other_nb * 100).toFixed(2);
+    var difference_nb_nf = ((s_own_nb_nf - s_other_nb_nf) / s_other_nb_nf * 100).toFixed(2);
     $("#info2").append("<p>Parameters1: " + parameters[2].join(", ") + "</p>");
     $("#info2").append("<p>Parameters2: " + parameters[3].join(", ") + "</p>");
-    $("#info2").append("<p>Difference with bonus: " + parameters[2].join(", ") + "</p>");
-    $("#info2").append("<p>Difference without bonus: " + parameters[2].join(", ") + "</p>");
+    $("#info2").append("<p>Difference with filter: " + difference_nb + "%</p>");
+    $("#info2").append("<p>Difference without filter: " + difference_nb_nf + "%</p>");
 }
 
 // Helpers
@@ -165,4 +167,39 @@ function seenOther(results, limit) {
         }
     }
     return mean(ret);
+}
+
+var barOptions = {
+    //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+    scaleBeginAtZero : true,
+
+    //Boolean - Whether grid lines are shown across the chart
+    scaleShowGridLines : true,
+
+    //String - Colour of the grid lines
+    scaleGridLineColor : "rgba(0,0,0,.05)",
+
+    //Number - Width of the grid lines
+    scaleGridLineWidth : 1,
+
+    //Boolean - Whether to show horizontal lines (except X axis)
+    scaleShowHorizontalLines: true,
+
+    //Boolean - Whether to show vertical lines (except Y axis)
+    scaleShowVerticalLines: true,
+
+    //Boolean - If there is a stroke on each bar
+    barShowStroke : false,
+
+    //Number - Pixel width of the bar stroke
+    barStrokeWidth : 2,
+
+    //Number - Spacing between each of the X value sets
+    barValueSpacing : 5,
+
+    //Number - Spacing between data sets within X values
+    barDatasetSpacing : 1,
+
+    //String - A legend template
+    legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
 }

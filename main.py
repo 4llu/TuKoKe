@@ -87,5 +87,5 @@ for popSet in range(PEOPLE_SETS):
 with open("Results/results" + str(param_num) + ".json", "w") as f:
 	f.write(json.dumps(parameter_results))
 with open("Results/params" + str(param_num) + ".json", "w") as f:
-	params = [FILTER_ON[param_num], FILTERMAX[param_num], BONUS_ON[param_num], F_MEAN[param_num], F_DEVIATION[param_num], PSHARE[param_num], PCREATE[param_num]]
+	params = [FILTER_ON[param_num], BONUS_ON[param_num], F_MEAN[param_num], F_DEVIATION[param_num], PSHARE[param_num], PCREATE[param_num]]
 	f.write(json.dumps(params))
