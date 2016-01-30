@@ -119,3 +119,6 @@ def friends(people, param_num):
 				if rr() < prob:
 					person.friends.append(id)
 					other_person.friends.append(ii)
+	for person in people:
+		if len(person.friends) == 0:
+			print("lalalalalalaalalalal")

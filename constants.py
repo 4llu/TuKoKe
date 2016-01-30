@@ -14,7 +14,7 @@ DOI_PREF = 0.4
 ## People ##
 
 # Amount of people in the system
-PEOPLE = 100
+PEOPLE = 500
 
 # Interests configuration (part of people with interest for topic)
 # Related to TOPICS and F_CONF

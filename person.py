@@ -82,7 +82,7 @@ class Person:
 	def share(self):
 		for post in self.buffer:
 			# Probability of sharing and skip posts of opposite preference
-			if rr() < self.pShare and (post.preference == 0 or post.preference == self.preference):
+			if rr() < self.pShare and (post.preference == 0 or post.preference == self.preference) and self.preference[post.topic] != 0:
 				# Create new post for sharing
 				pref = 0
 				# Add preference if necessary
