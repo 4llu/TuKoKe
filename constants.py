@@ -14,20 +14,15 @@ DOI_PREF = 0.4
 ## People ##
 
 # Amount of people in the system
-PEOPLE = 500
+PEOPLE = 300
+# PEOPLE = 500
 
 # Interests configuration (part of people with interest for topic)
 # Related to TOPICS and F_CONF
 I_CONF = [0.5, 0.4, 0.4, 0.4]
 
-
 ## Sites ##
 
 # Site post creation variables
 S_MEAN = 20
-S_DEVIATION = 3
-
-## Filter ##
-
-# Should this be %?
-FILTERMAX = 50
+S_DEVIATION = 0

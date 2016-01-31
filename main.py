@@ -3,12 +3,12 @@ import json
 import sys
 from parameters import *
 
-# PEOPLE_SETS = 1 # Debug
-# REPETITIONS = 1 # Debug
-# TIMESTEPS = 10 # Debug
-PEOPLE_SETS = 3
-REPETITIONS = 4
-TIMESTEPS = 30
+PEOPLE_SETS = 10 # Debug
+REPETITIONS = 10 # Debug
+TIMESTEPS = 30 # Debug
+# PEOPLE_SETS = 10
+# REPETITIONS = 10
+# TIMESTEPS = 50
 
 # Parameter set number
 param_num = int(sys.argv[1])
@@ -24,19 +24,21 @@ filter = generate.filter(param_num)
 
 ##### Main loop #####
 
-### Different friend sets with same parameters ###
+# Friend sets
+# ======================================
 for popSet in range(PEOPLE_SETS):
 	# Save results of population set here
 	population_results = []
-	# Create people and distribute interests
+	# Create people
 	people = generate.people(param_num)
-	# Create friend network
 	generate.friends(people, param_num)
-	### Repetitions (because of stochasticity) ###
+	# Repetitions
+	# ======================================
 	for rep in range(REPETITIONS):
 		# Save results of repetition here
 		rep_results = []
-		#---- Single run ----#
+		# Single run
+		# =======================================
 		for step in range(TIMESTEPS):
 
 			print(step) # Debug
@@ -70,22 +72,25 @@ for popSet in range(PEOPLE_SETS):
 			person_results = {};
 			person_results["received"] = person.received
 			person_results["seen"] = person.seen
-			person_results["created"] = person.created
+			# person_results["created"] = person.created
+			# person_results["shared"] = person.shared
 			person_results["interests"] = person.interests
-			person_results["preference"] = person.preference
+			# person_results["preference"] = person.preference
 			rep_results.append(person_results)
 		population_results.append(rep_results)
 
 		# Reset people
 		for person in people:
 			person.reset()
+
 		print("|||||||||||||||||||||||||||||||||||||||||||||||||||||||") # DEBUG
 
-	#People set result save
+	# People set result save
 	parameter_results.append(population_results)
+
 #Save results with JSON
 with open("Results/results" + str(param_num) + ".json", "w") as f:
 	f.write(json.dumps(parameter_results))
 with open("Results/params" + str(param_num) + ".json", "w") as f:
-	params = [FILTER_ON[param_num], BONUS_ON[param_num], F_MEAN[param_num], F_DEVIATION[param_num], PSHARE[param_num], PCREATE[param_num]]
+	params = [FILTER_ON[param_num], F_MEAN[param_num], F_DEVIATION[param_num], PSHARE[param_num], PCREATE[param_num]]
 	f.write(json.dumps(params))

@@ -3,7 +3,6 @@ from random import randint as ri
 from post import Post
 from constants import TOPICS
 from parameters import FILTER_ON
-from parameters import BONUS_ON
 
 class Person:
 	def __init__(self, pShare, pCreate, DoI, param_num):
@@ -44,14 +43,13 @@ class Person:
 	def getPosts(self, site):
 		# Preference bonus
 		bonus = 0
-		if BONUS_ON[self.param_num]:
-			if site.preference == self.preference:
-				bonus = 0.2
-			elif site.preference != 0:
-				bonus = -0.2
-			# Prevent negative interest
-			if self.interests[site.topic] + bonus < 0:
-				bonus = 0
+		if site.preference == self.preference:
+			bonus = 0.2
+		elif site.preference != 0:
+			bonus = -0.2
+		# Prevent negative interest
+		if self.interests[site.topic] + bonus < 0:
+			bonus = 0
 		num = int(len(site.posts) * (self.interests[site.topic] + bonus))
 		for post in site.posts[:num]:
 			self.buffer.append(post)
@@ -68,7 +66,7 @@ class Person:
 				self.received[post.topic][post.type] += 1
 		# Filter
 		if FILTER_ON[self.param_num]:
-			self.buffer = filter.filter(self.buffer, self.interests)
+			self.buffer = filter.filter(self.buffer, self.interests, self.preference)
 		# Save seen
 		for post in self.buffer:
 			if post.topic == "A":
@@ -82,7 +80,7 @@ class Person:
 	def share(self):
 		for post in self.buffer:
 			# Probability of sharing and skip posts of opposite preference
-			if rr() < self.pShare and (post.preference == 0 or post.preference == self.preference) and self.preference[post.topic] != 0:
+			if rr() < self.pShare and (post.preference == 0 or post.preference == self.preference) and self.interests[post.topic] != 0:
 				# Create new post for sharing
 				pref = 0
 				# Add preference if necessary

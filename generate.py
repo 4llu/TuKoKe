@@ -27,7 +27,7 @@ def sites():
 	return  sites
 
 def filter(param_num):
-	return Filter(FILTERMAX[param_num])
+	return Filter()
 
 def people(param_num):
 	people = []
@@ -40,7 +40,7 @@ def people(param_num):
 	# Create quotas
 	quotas = []
 	for ii, topic in enumerate(TOPICS):
-		quotas.append(math.ceil(PEOPLE * I_CONF[ii]))
+		quotas.append(int(math.ceil(PEOPLE * I_CONF[ii])))
 
 	# Distribute interests
 	for ii, quota in enumerate(quotas):
@@ -119,6 +119,3 @@ def friends(people, param_num):
 				if rr() < prob:
 					person.friends.append(id)
 					other_person.friends.append(ii)
-	for person in people:
-		if len(person.friends) == 0:
-			print("lalalalalalaalalalal")
