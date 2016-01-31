@@ -10,11 +10,10 @@ DOI = [0.7, 0.4, 0]
 # (chance to be very interested)
 DOI_PREF = 0.4
 
-
 ## People ##
 
 # Amount of people in the system
-PEOPLE = 300
+PEOPLE = 200
 # PEOPLE = 500
 
 # Interests configuration (part of people with interest for topic)

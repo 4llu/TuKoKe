@@ -26,7 +26,7 @@ def sites():
 
 	return  sites
 
-def filter(param_num):
+def filter():
 	return Filter()
 
 def people(param_num):

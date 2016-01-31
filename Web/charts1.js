@@ -112,22 +112,13 @@ function s_same_pref(results, limit) {
 }
 
 function s_other_pref(results, limit) {
-    var ret = []
+    var ret = [];
     var people = getAllPeople(results);
     for (var ii = 0; ii < people.length; ii++) {
         var person = people[ii];
-        if (limit == "both") {
-            if (person.interests.A != 0) {
-                for (var type = 0; type < person.seen.A.length; type++) {
-                    ret.push(person.seen.A[type][1]);
-                }
-            }
-        }
-        else {
-            if (person.interests.A == limit) {
-                for (var type = 0; type < person.seen.A.length; type++) {
-                    ret.push(person.seen.A[type][1]);
-                }
+        if (person.interests.A >= limit) {
+            for (var type = 0; type < person.seen.A.length; type++) {
+                ret.push(person.seen.A[type][1]);
             }
         }
     }
