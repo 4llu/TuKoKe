@@ -4,10 +4,10 @@
 ## Filter ##
 
 FILTER_ON = [
-# charts 1
+# charts 1 (0-1)
     True,
     False,
-# charts 2
+# charts 2 (2-15)
     True,
     True,
     True,
@@ -15,12 +15,19 @@ FILTER_ON = [
     True,
     True,
     True,
-    False,
-    False,
     False,
     False,
     False,
     False,
+    False,
+    False,
+    False,
+# charts 3 (16-21)
+    True,
+    False,
+    True,
+    False,
+    True,
     False
 ]
 
@@ -38,6 +45,13 @@ F_MEAN = [
     30,
     30,
     30,
+    30,
+    30,
+    30,
+    30,
+    30,
+    30,
+# charts 3
     30,
     30,
     30,
@@ -64,7 +78,42 @@ F_DEVIATION = [
     0,
     0,
     0,
-    0
+    0,
+#charts 3
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+]
+
+F_PROB_BONUS = [
+# charts 1
+    0.2,
+    0.2,
+# charts 2
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+# charts 3
+    0,
+    0,
+    0.2,
+    0.2,
+    0.4,
+    0.4
 ]
 
 # Probabilities of sharing and creating posts
@@ -87,6 +136,13 @@ PSHARE = [
     0.08,
     0.1,
     0.12,
+# charts 3
+    0.06,
+    0.06,
+    0.06,
+    0.06,
+    0.06,
+    0.06
 ]
 
 PCREATE = [
@@ -102,6 +158,13 @@ PCREATE = [
     0,
     0,
     0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+# charts 3
     0,
     0,
     0,

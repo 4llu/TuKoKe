@@ -45,9 +45,6 @@ function main(resultsJSON) {
     var s_other = [];
     var s_difference = [];
 
-    console.log(results[0])
-    console.log(s_same_pref(results[0][0], 0.4));
-
     for (var result = 0; result < results.length; result++) {
         s_same.push(s_same_pref(results[result], 0.4));
         s_other.push(s_other_pref(results[result], 0.4));
@@ -55,9 +52,6 @@ function main(resultsJSON) {
         var dif = ((s_same[result] - s_other[result]) / s_other[result] * 100).toFixed(2);
         s_difference.push(dif);
     }
-    // console.log(s_difference);
-
-
 
     // CHART 1
 	// =========================
@@ -115,35 +109,4 @@ function main(resultsJSON) {
         ]
     }
     var chart1 = new Chart(ctx1).Line(data1, lineOptions);
-}
-
-// FUNCTIONS
-// =======================
-
-function s_same_pref(results, limit) {
-    var ret = [];
-    var people = getAllPeople(results);
-    for (var ii = 0; ii < people.length; ii++) {
-        var person = people[ii];
-        if (person.interests.A >= limit) {
-            for (var type = 0; type < person.seen.A.length; type++) {
-                ret.push(person.seen.A[type][0]);
-            }
-        }
-    }
-    return mean(ret);
-}
-
-function s_other_pref(results, limit) {
-    var ret = [];
-    var people = getAllPeople(results);
-    for (var ii = 0; ii < people.length; ii++) {
-        var person = people[ii];
-        if (person.interests.A >= limit) {
-            for (var type = 0; type < person.seen.A.length; type++) {
-                ret.push(person.seen.A[type][1]);
-            }
-        }
-    }
-    return mean(ret);
 }

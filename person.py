@@ -44,7 +44,7 @@ class Person:
 		# Preference bonus
 		bonus = 0
 		if site.preference == self.preference:
-			bonus = 0.2
+			bonus = 0.1
 		elif site.preference != 0:
 			bonus = -0.2
 		# Prevent negative interest

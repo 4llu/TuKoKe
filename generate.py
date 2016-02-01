@@ -91,8 +91,8 @@ def friends(people, param_num):
 			# Logic of accepting a friend request
 			# Amount of previous friends
 			# HARDCODE All numbers
-			if len(other_person.friends) < 4 or (len(other_person.friends) < 8 and rr() < 0.7) or rr() < 0.3:
-				prob = 0.3
+			if len(other_person.friends) < 8 or (len(other_person.friends) < 12 and rr() < 0.7) or rr() < 0.3:
+				prob = 0.6 - F_PROB_BONUS[param_num]
 				# Mutual interests
 				for jj, topic in enumerate(TOPICS):
 					# Split topic
@@ -103,7 +103,7 @@ def friends(people, param_num):
 						# Same preference
 						elif person.preference == other_person.preference:
 							# Shared interest
-							prob += 0.3
+							prob += F_PROB_BONUS[param_num]
 							# Bonus
 							prob += 0.1
 						# Different preference
@@ -114,7 +114,7 @@ def friends(people, param_num):
 					else:
 						# Shared interest
 						if other_person.interests[topic] > 0 and person.interests[topic] > 0:
-							prob += 0.3
+							prob += F_PROB_BONUS[param_num]
 				# Accept of decline friend request
 				if rr() < prob:
 					person.friends.append(id)

@@ -6,9 +6,9 @@ from parameters import *
 # PEOPLE_SETS = 2 # Debug
 # REPETITIONS = 3 # Debug
 # TIMESTEPS = 2 # Debug
-PEOPLE_SETS = 5
+PEOPLE_SETS = 10
 REPETITIONS = 10
-TIMESTEPS = 30
+TIMESTEPS = 40
 
 # Parameter set number
 param_sets_start = int(sys.argv[1])
@@ -16,7 +16,7 @@ param_sets_stop = int(sys.argv[2])
 
 
 # Newsfeed
-sites  = generate.sites()
+sites = generate.sites()
 # Filter
 filter = generate.filter()
 
@@ -99,5 +99,5 @@ for param_num in range(param_sets_start, param_sets_stop):
 	with open("Results/results" + str(param_num) + ".json", "w") as f:
 		f.write(json.dumps(parameter_results))
 	with open("Results/params" + str(param_num) + ".json", "w") as f:
-		params = [FILTER_ON[param_num], F_MEAN[param_num], F_DEVIATION[param_num], PSHARE[param_num], PCREATE[param_num]]
+		params = [FILTER_ON[param_num], F_MEAN[param_num], F_PROB_BONUS[param_num], PSHARE[param_num], PCREATE[param_num]]
 		f.write(json.dumps(params))

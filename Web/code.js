@@ -1,3 +1,31 @@
+function s_same_pref(results, limit) {
+    var ret = [];
+    var people = getAllPeople(results);
+    for (var ii = 0; ii < people.length; ii++) {
+        var person = people[ii];
+        if (person.interests.A >= limit) {
+            for (var type = 0; type < person.seen.A.length; type++) {
+                ret.push(person.seen.A[type][0]);
+            }
+        }
+    }
+    return mean(ret);
+}
+
+function s_other_pref(results, limit) {
+    var ret = [];
+    var people = getAllPeople(results);
+    for (var ii = 0; ii < people.length; ii++) {
+        var person = people[ii];
+        if (person.interests.A >= limit) {
+            for (var type = 0; type < person.seen.A.length; type++) {
+                ret.push(person.seen.A[type][1]);
+            }
+        }
+    }
+    return mean(ret);
+}
+
 function mean(array) {
     return (sum(array) / array.length).toFixed(2);
 }
